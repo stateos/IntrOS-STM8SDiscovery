@@ -3,7 +3,6 @@ IntrOS
 
 Free, simple and tiny cooperative operating system (OS) designed for deeply embedded applications.
 It was inspired by the concept of a state machine.
-TEMPLATE. NOT TESTED!
 
 Features
 --------
