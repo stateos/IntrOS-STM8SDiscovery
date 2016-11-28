@@ -24,7 +24,7 @@ Features
 Target
 -------
 
-STM8SDiscovery board.
+STM8S-Discovery board.
 
 License
 -------

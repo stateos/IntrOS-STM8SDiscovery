@@ -20,4 +20,6 @@
 
 +def __endzp=@.ubsct                # end of uninitialized zpage
 +def __memory=@.bss                 # end of bss segment
-+def __stack=0x0007FF
++def __stack=0x07FF
++def __startmem=__memory
++def __endmem=__stack
