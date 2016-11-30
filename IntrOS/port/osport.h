@@ -2,7 +2,7 @@
 
     @file    IntrOS: osport.h
     @author  Rajmund Szymanski
-    @date    24.11.2016
+    @date    30.11.2016
     @brief   IntrOS port definitions for STM8 uC.
 
  ******************************************************************************
@@ -30,8 +30,6 @@
 #define __INTROSPORT_H
 
 #include <osconfig.h>
-
-INTERRUPT_HANDLER(TIM4_UPD_OVF_IRQHandler, 23);
 
 #ifdef __cplusplus
 extern "C" {
