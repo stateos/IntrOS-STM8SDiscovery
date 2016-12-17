@@ -38,18 +38,15 @@ void core_ctx_switch( void )
 	#asm
 
 #if defined(__MODS__) || defined(__MODSL__)
-	xref  f_core_tsk_handler
-	xdef  f_core_tsk_break
 __state:   set 0x08
 __sp:      set 0x11
 __top:     set 0x13
 #else
-	xref  _core_tsk_handler
-	xdef  _core_tsk_break
 __state:   set 0x08
 __sp:      set 0x10
 __top:     set 0x12
 #endif
+
 	xref.b c_x
 
 	push   cc
@@ -60,8 +57,10 @@ _priv_tsk_save:
 	ldw    x, _System
 	ldw   (__sp, x), y
 #if defined(__MODS__) || defined(__MODSL__)
+	xref  f_core_tsk_handler
 	callf f_core_tsk_handler
 #else
+	xref  _core_tsk_handler
 	call  _core_tsk_handler
 #endif
 	ldw    y, x
@@ -94,8 +93,10 @@ _priv_tsk_start:
 #endif    
 
 #if defined(__MODS__) || defined(__MODSL__)
+	xdef  f_core_tsk_break
 f_core_tsk_break:
 #else
+	xdef  _core_tsk_break
 _core_tsk_break:
 #endif    
 
