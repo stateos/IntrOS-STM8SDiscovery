@@ -2,7 +2,7 @@
 
     @file    IntrOS: osport.h
     @author  Rajmund Szymanski
-    @date    16.12.2016
+    @date    28.12.2016
     @brief   IntrOS port definitions for STM8 uC.
 
  ******************************************************************************
@@ -63,6 +63,20 @@ extern "C" {
 #ifndef  OS_STACK_SIZE
 #define  OS_STACK_SIZE      256 /* default task stack size in bytes           */
 #endif
+
+/* -------------------------------------------------------------------------- */
+
+#ifndef  OS_ASSERT
+#define  OS_ASSERT            0 /* don't include standard assertions */
+#endif
+
+#if     (OS_ASSERT == 0)
+#ifndef  NDEBUG
+#define  NDEBUG
+#endif
+#endif
+
+#include <assert.h>
 
 /* -------------------------------------------------------------------------- */
 
