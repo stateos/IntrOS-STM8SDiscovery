@@ -83,10 +83,9 @@ void TIM1_UP_TIM10_IRQHandler( void )
 
 *******************************************************************************/
 
-@interrupt
-void TIM3_UPD_OVF_BRK_IRQHandler( void )
+INTERRUPT_HANDLER(TIM3_UPD_OVF_BRK_IRQHandler, 15)
 {
-	TIM3->SR1= ~TIM3_SR1_UIF;
+	TIM3->SR1= (uint8_t)~TIM3_SR1_UIF;
 
 	Counter++;
 }

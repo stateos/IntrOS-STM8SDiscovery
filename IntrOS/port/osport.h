@@ -31,6 +31,8 @@
 
 #include <osconfig.h>
 
+INTERRUPT_HANDLER(TIM3_UPD_OVF_BRK_IRQHandler, 15);
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -84,8 +86,10 @@ typedef  uint8_t              stk_t;
 
 /* -------------------------------------------------------------------------- */
 
+#if      defined(__CSMC__)
 extern   stk_t               _stack[];
 #define  MAIN_TOP            _stack+1
+#endif
 
 /* -------------------------------------------------------------------------- */
 
@@ -98,8 +102,13 @@ extern   stk_t               _stack[];
 
 /* -------------------------------------------------------------------------- */
 
+#if   defined(__CSMC__)
 #define  port_get_lock()     (char)_asm("push cc""\n""pop a")
 #define  port_put_lock(state)      _asm("push a""\n""pop cc", (char)(state))
+#elif defined (__SDCC)
+char     port_get_lock();
+void     port_put_lock(char state);
+#endif
 
 #define  port_set_lock()            disableInterrupts()
 #define  port_clr_lock()            enableInterrupts()
