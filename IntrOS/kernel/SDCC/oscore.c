@@ -2,7 +2,7 @@
 
     @file    IntrOS: oscore.c
     @author  Rajmund Szymanski
-    @date    24.11.2016
+    @date    20.01.2017
     @brief   IntrOS port file for STM8.
 
  ******************************************************************************
@@ -49,7 +49,7 @@ _priv_tsk_save:
 	ldw    x, _System
 	ldw   (__sp, x), y
 	.globl _core_tsk_handler
-	call  _core_tsk_handler
+	call   _core_tsk_handler
 	ldw    y, x
 	ldw    y, (__sp, y)
 	tnzw   y
@@ -72,21 +72,7 @@ _core_tsk_break:
 
 	rim
 	clrw   y
-	jp    _priv_tsk_save
-
-	.globl _port_get_lock
-_port_get_lock:
-
-	push   cc
-	pop    a
-	ret
-
-	.globl _port_put_lock
-_port_put_lock:
-
-	push   a
-	pop    cc
-	ret
+	jp     _priv_tsk_save
 
 	__endasm;
 }

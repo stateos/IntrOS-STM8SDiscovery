@@ -2,7 +2,7 @@
 
     @file    IntrOS: oscore.c
     @author  Rajmund Szymanski
-    @date    24.11.2016
+    @date    20.01.2017
     @brief   IntrOS port file for STM8.
 
  ******************************************************************************
@@ -47,8 +47,6 @@ __sp:      set 0x10
 __top:     set 0x12
 #endif
 
-	xref.b c_x
-
 	push   cc
 	ldw    y,  sp
 
@@ -60,13 +58,13 @@ _priv_tsk_save:
 	xref  f_core_tsk_handler
 	callf f_core_tsk_handler
 #else
-	xref  _core_tsk_handler
-	call  _core_tsk_handler
+	xref   _core_tsk_handler
+	call   _core_tsk_handler
 #endif
 	ldw    y, x
 	ldw    y, (__sp, y)
 	tnzw   y
-	jreq  _priv_tsk_start
+	jreq   _priv_tsk_start
 	ldw    sp, y
 	pop    cc
 #if defined(__MODS__) || defined(__MODSL__)
@@ -82,6 +80,7 @@ _priv_tsk_start:
 	decw   y
 	ldw    sp, y
 #if defined(__MODS__) || defined(__MODSL__)
+	xref.b c_x
 	ld	   a, (__state, x)
 	ldw	   x, (__state + 1, x)
 	ld	   c_x, a
@@ -96,13 +95,13 @@ _priv_tsk_start:
 	xdef  f_core_tsk_break
 f_core_tsk_break:
 #else
-	xdef  _core_tsk_break
+	xdef   _core_tsk_break
 _core_tsk_break:
 #endif    
 
 	rim
 	clrw   y
-	jp    _priv_tsk_save
+	jp     _priv_tsk_save
 
 	#endasm
 }

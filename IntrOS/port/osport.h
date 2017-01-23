@@ -2,7 +2,7 @@
 
     @file    IntrOS: osport.h
     @author  Rajmund Szymanski
-    @date    28.12.2016
+    @date    20.01.2017
     @brief   IntrOS port definitions for STM8 uC.
 
  ******************************************************************************
@@ -69,7 +69,7 @@ extern "C" {
 /* -------------------------------------------------------------------------- */
 
 #ifndef  OS_ASSERT
-#define  OS_ASSERT            0 /* don't include standard assertions */
+#define  OS_ASSERT            0 /* don't include standard assertions          */
 #endif
 
 #if     (OS_ASSERT == 0)
@@ -102,11 +102,11 @@ extern   stk_t               _stack[];
 
 /* -------------------------------------------------------------------------- */
 
-#if   defined(__CSMC__)
+#if      defined(__CSMC__)
 #define  port_get_lock()     (char)_asm("push cc""\n""pop a")
 #define  port_put_lock(state)      _asm("push a""\n""pop cc", (char)(state))
-#elif defined (__SDCC)
-char     port_get_lock();
+#else
+char     port_get_lock(void);
 void     port_put_lock(char state);
 #endif
 

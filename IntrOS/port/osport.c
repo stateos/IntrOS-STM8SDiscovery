@@ -2,7 +2,7 @@
 
     @file    IntrOS: osport.c
     @author  Rajmund Szymanski
-    @date    02.12.2016
+    @date    20.01.2017
     @brief   IntrOS port file for STM8 uC.
 
  ******************************************************************************
@@ -89,5 +89,39 @@ INTERRUPT_HANDLER(TIM3_UPD_OVF_BRK_IRQHandler, 15)
 
 	Counter++;
 }
+
+/* -------------------------------------------------------------------------- */
+
+/******************************************************************************
+ Put here necessary lock / unlock procedures
+*******************************************************************************/
+
+#if defined(__SDCC)
+
+char port_get_lock(void) __naked
+{
+	__asm
+
+	push   cc
+	pop    a
+	ret
+
+	__endasm;
+}
+
+void port_put_lock(char state) __naked
+{
+	(void) state;
+	
+	__asm
+
+	push   a
+	pop    cc
+	ret
+
+	__endasm;
+}
+
+#endif // __SDCC
 
 /* -------------------------------------------------------------------------- */
