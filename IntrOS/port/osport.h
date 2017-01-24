@@ -2,7 +2,7 @@
 
     @file    IntrOS: osport.h
     @author  Rajmund Szymanski
-    @date    20.01.2017
+    @date    24.01.2017
     @brief   IntrOS port definitions for STM8 uC.
 
  ******************************************************************************
@@ -93,12 +93,32 @@ extern   stk_t               _stack[];
 
 /* -------------------------------------------------------------------------- */
 
+#if      defined(__SDCC)
+
 #ifndef  __CONSTRUCTOR
 #define  __CONSTRUCTOR
 #endif
-#ifndef  __NORETURN
-#define  __NORETURN
+#ifndef  __NO_RETURN
+#define  __NO_RETURN         _Noreturn
 #endif
+#ifndef  __STATIC_INLINE
+#define  __STATIC_INLINE      static inline
+#endif
+
+#else
+
+#ifndef  __CONSTRUCTOR
+#define  __CONSTRUCTOR
+#endif
+#ifndef  __NO_RETURN
+#define  __NO_RETURN
+#endif
+#ifndef  __STATIC_INLINE
+#define  __STATIC_INLINE      static inline
+#endif
+
+#endif
+
 
 /* -------------------------------------------------------------------------- */
 
