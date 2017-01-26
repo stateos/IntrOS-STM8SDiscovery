@@ -2,7 +2,7 @@
 
     @file    IntrOS: osbase.h
     @author  Rajmund Szymanski
-    @date    14.01.2017
+    @date    25.01.2017
     @brief   This file contains basic definitions for IntrOS.
 
  ******************************************************************************
@@ -30,6 +30,7 @@
 #define __INTROSBASE_H
 
 #include <stdbool.h>
+#include <setjmp.h>
 #include <osport.h>
 
 #ifdef __cplusplus
@@ -106,6 +107,39 @@ typedef struct __sys
 	unsigned cnt;   // system timer counter
 
 }	sys_t;
+
+/* -------------------------------------------------------------------------- */
+
+// task context
+
+#if   defined(__CSMC__)
+
+typedef struct __ctx
+{
+	void   * sp;
+	fun_t  * pc;
+
+}	ctx_t;
+
+#elif defined(__SDCC)
+
+typedef struct __ctx
+{
+	fun_t  * pc;
+	void   * sp;
+
+}	ctx_t;
+
+#endif
+
+/* -------------------------------------------------------------------------- */
+
+__STATIC_INLINE
+void port_ctx_init( ctx_t *ctx, stk_t *sp, fun_t *pc )
+{
+	ctx->sp = sp - 1;
+	ctx->pc = pc;
+}
 
 /* -------------------------------------------------------------------------- */
 
