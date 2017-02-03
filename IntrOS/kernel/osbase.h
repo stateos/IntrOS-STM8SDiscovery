@@ -2,7 +2,7 @@
 
     @file    IntrOS: osbase.h
     @author  Rajmund Szymanski
-    @date    25.01.2017
+    @date    31.01.2017
     @brief   This file contains basic definitions for IntrOS.
 
  ******************************************************************************
@@ -59,8 +59,12 @@ extern "C" {
 
 /* -------------------------------------------------------------------------- */
 
+#ifndef IMMEDIATE
 #define IMMEDIATE  ( 0U) // no waiting
+#endif
+#ifndef INFINITE
 #define INFINITE   (~0U) // infinite waiting
+#endif
 
 /* -------------------------------------------------------------------------- */
 
@@ -131,6 +135,8 @@ typedef struct __ctx
 }	ctx_t;
 
 #endif
+
+#define _CTX_INIT() { 0, 0 }
 
 /* -------------------------------------------------------------------------- */
 
