@@ -2,7 +2,7 @@
 
     @file    IntrOS: os_tmr.c
     @author  Rajmund Szymanski
-    @date    14.01.2017
+    @date    28.02.2017
     @brief   This file provides set of functions for IntrOS.
 
  ******************************************************************************
@@ -38,14 +38,13 @@ void priv_tmr_start( tmr_t *tmr )
 }
 
 /* -------------------------------------------------------------------------- */
-void tmr_startUntil( tmr_t *tmr, unsigned time, fun_t *proc )
+void tmr_startUntil( tmr_t *tmr, unsigned time )
 /* -------------------------------------------------------------------------- */
 {
 	assert(tmr);
 
 	port_sys_lock();
 
-	tmr->state  = proc;
 	tmr->start  = Counter;
 	tmr->delay  = time - tmr->start;
 	tmr->period = 0;
@@ -56,7 +55,24 @@ void tmr_startUntil( tmr_t *tmr, unsigned time, fun_t *proc )
 }
 
 /* -------------------------------------------------------------------------- */
-void tmr_start( tmr_t *tmr, unsigned delay, unsigned period, fun_t *proc )
+void tmr_start( tmr_t *tmr, unsigned delay, unsigned period )
+/* -------------------------------------------------------------------------- */
+{
+	assert(tmr);
+
+	port_sys_lock();
+
+	tmr->start  = Counter;
+	tmr->delay  = delay;
+	tmr->period = period;
+
+	priv_tmr_start(tmr);
+
+	port_sys_unlock();
+}
+
+/* -------------------------------------------------------------------------- */
+void tmr_startFrom( tmr_t *tmr, unsigned delay, unsigned period, fun_t *proc )
 /* -------------------------------------------------------------------------- */
 {
 	assert(tmr);
@@ -82,9 +98,7 @@ unsigned tmr_take( tmr_t *tmr )
 	assert(tmr);
 
 	if (tmr->id == ID_STOPPED)
-	{
 		event = E_SUCCESS;
-	}
 
 	return event;
 }
@@ -93,12 +107,13 @@ unsigned tmr_take( tmr_t *tmr )
 void tmr_wait( tmr_t *tmr )
 /* -------------------------------------------------------------------------- */
 {
+	unsigned signal;
+
 	assert(tmr);
 
 	if (tmr->id != ID_STOPPED)
 	{
-		unsigned signal = tmr->signal;
-	
+		signal = tmr->signal;
 		while (tmr->signal == signal) tsk_yield();
 	}
 }
