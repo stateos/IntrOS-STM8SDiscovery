@@ -2,24 +2,7 @@ IntrOS
 =======
 
 Free, simple and tiny cooperative operating system (OS) designed for deeply embedded applications.
-It was inspired by the concept of a state machine.
-
-Features
---------
-
-- kernel works in cooperative (non-preemptive) mode only
-- signals (auto clearing, protected)
-- events
-- flags (any, all)
-- barriers
-- semaphores
-- mutexes
-- condition variables
-- memory pools
-- message queues
-- mailbox queues
-- timers (one-shot, periodic)
-- all documentation is contained within the source files
+TEMPLATE.
 
 Target
 -------
