@@ -2,7 +2,7 @@
 
     @file    IntrOS: osbase.h
     @author  Rajmund Szymanski
-    @date    31.01.2017
+    @date    10.03.2017
     @brief   This file contains basic definitions for IntrOS.
 
  ******************************************************************************
@@ -73,66 +73,71 @@ extern "C" {
 
 /* -------------------------------------------------------------------------- */
 
-typedef   void       fun_t(); // timer/task procedure
+typedef struct __tmr tmr_t, *tmr_id; // timer
+typedef struct __tsk tsk_t, *tsk_id; // task
 
-typedef struct __que que_t; // queue
-typedef struct __tmr tmr_t; // timer
-typedef struct __tsk tsk_t; // task
+typedef void fun_t(); // timer/task procedure
 
 /* -------------------------------------------------------------------------- */
 
 // queue
 
+typedef struct __que que_t;
+
 struct __que
 {
-	que_t  * next;
+	que_t  * next; // next object in the queue
 };
 
 /* -------------------------------------------------------------------------- */
 
 // object (timer, task) header
 
-typedef struct __obj
+typedef struct __obj obj_t;
+
+struct __obj
 {
 	unsigned id;    // object id: ID_STOPPED, ID_READY, ID_DELAYED, ID_TIMER
 	void   * prev;  // previous object in the READY queue
 	void   * next;  // next object in the READY queue
-
-}	obj_t;
+};
 
 /* -------------------------------------------------------------------------- */
 
 // system data
 
-typedef struct __sys
+typedef struct __sys sys_t;
+
+struct __sys
 {
 	tsk_t  * cur;   // pointer to the current task control block
 	volatile
 	unsigned cnt;   // system timer counter
-
-}	sys_t;
+};
 
 /* -------------------------------------------------------------------------- */
 
 // task context
 
+typedef struct __ctx ctx_t;
+
 #if   defined(__CSMC__)
 
-typedef struct __ctx
+struct __ctx
 {
 	void   * sp;
 	fun_t  * pc;
 
-}	ctx_t;
+};
 
 #elif defined(__SDCC)
 
-typedef struct __ctx
+struct __ctx
 {
 	fun_t  * pc;
 	void   * sp;
 
-}	ctx_t;
+};
 
 #endif
 
