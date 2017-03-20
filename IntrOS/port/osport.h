@@ -2,7 +2,7 @@
 
     @file    IntrOS: osport.h
     @author  Rajmund Szymanski
-    @date    24.01.2017
+    @date    20.03.2017
     @brief   IntrOS port definitions for STM8 uC.
 
  ******************************************************************************
@@ -36,11 +36,6 @@ INTERRUPT_HANDLER(TIM3_UPD_OVF_BRK_IRQHandler, 15);
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/* -------------------------------------------------------------------------- */
-
-#define  Counter System.cnt
-#define  Current System.cur
 
 /* -------------------------------------------------------------------------- */
 
@@ -118,7 +113,6 @@ extern   stk_t               _stack[];
 #endif
 
 #endif
-
 
 /* -------------------------------------------------------------------------- */
 
