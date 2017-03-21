@@ -2,7 +2,7 @@
 
     @file    IntrOS: osport.c
     @author  Rajmund Szymanski
-    @date    20.01.2017
+    @date    21.03.2017
     @brief   IntrOS port file for STM8 uC.
 
  ******************************************************************************
@@ -34,19 +34,6 @@ void port_sys_init( void )
 {
 /******************************************************************************
  Put here configuration of system timer
-
- Example for TIM1 (STM32F4):
-
-	NVIC_SetPriority(TIM1_UP_TIM10_IRQn, 0xFF);
-	NVIC_EnableIRQ  (TIM1_UP_TIM10_IRQn);
-	RCC->APB2ENR |= RCC_APB2ENR_TIM1EN;
-
-	TIM1->PSC  = CPU_FREQUENCY / 10000 - 1;
-	TIM1->ARR  = 10000 /  OS_FREQUENCY - 1;
-	TIM1->EGR  = TIM_EGR_UG;
-	TIM1->CR1  = TIM_CR1_CEN;
-	TIM1->DIER = TIM_DIER_UIE;
-
 *******************************************************************************/
 
 	CLK->CKDIVR = 0;
@@ -65,30 +52,32 @@ void port_sys_init( void )
 	TIM3->CR1  |= TIM3_CR1_CEN;
 
 	enableInterrupts();
+
+/******************************************************************************
+ End of configuration
+*******************************************************************************/
 }
 
 /* -------------------------------------------------------------------------- */
 
+#if OS_TIMER == 0
+
 /******************************************************************************
  Put here the procedure of interrupt handler of system timer
-
- Example for TIM1 (STM32F4):
-
-void TIM1_UP_TIM10_IRQHandler( void )
-{
-	TIM1->SR = ~TIM_SR_UIF; // clear timer's status register
-
-	Counter++;
-}
-
 *******************************************************************************/
 
 INTERRUPT_HANDLER(TIM3_UPD_OVF_BRK_IRQHandler, 15)
 {
-	TIM3->SR1= (uint8_t)~TIM3_SR1_UIF;
+	TIM3->SR1= (uint8_t) ~TIM3_SR1_UIF;
 
-	Counter++;
+	System.cnt++;
 }
+
+/******************************************************************************
+ End of the procedure of interrupt handler
+*******************************************************************************/
+
+#endif//OS_TIMER
 
 /* -------------------------------------------------------------------------- */
 

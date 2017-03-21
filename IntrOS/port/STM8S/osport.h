@@ -2,7 +2,7 @@
 
     @file    IntrOS: osport.h
     @author  Rajmund Szymanski
-    @date    20.03.2017
+    @date    21.03.2017
     @brief   IntrOS port definitions for STM8 uC.
 
  ******************************************************************************
@@ -31,10 +31,20 @@
 
 #include <osconfig.h>
 
-INTERRUPT_HANDLER(TIM3_UPD_OVF_BRK_IRQHandler, 15);
-
 #ifdef __cplusplus
 extern "C" {
+#endif
+
+INTERRUPT_HANDLER(TIM3_UPD_OVF_BRK_IRQHandler, 15);
+
+/* -------------------------------------------------------------------------- */
+
+#ifndef  OS_TIMER
+#define  OS_TIMER             0
+#endif
+
+#if      OS_TIMER > 0
+#error   osconfig.h: Incorrect OS_TIMER value! This port does not support tick-less mode.
 #endif
 
 /* -------------------------------------------------------------------------- */
@@ -58,7 +68,7 @@ extern "C" {
 /* -------------------------------------------------------------------------- */
 
 #ifndef  OS_STACK_SIZE
-#define  OS_STACK_SIZE      256 /* default task stack size in bytes           */
+#define  OS_STACK_SIZE      128 /* default task stack size in bytes           */
 #endif
 
 /* -------------------------------------------------------------------------- */
@@ -88,19 +98,7 @@ extern   stk_t               _stack[];
 
 /* -------------------------------------------------------------------------- */
 
-#if      defined(__SDCC)
-
-#ifndef  __CONSTRUCTOR
-#define  __CONSTRUCTOR
-#endif
-#ifndef  __NO_RETURN
-#define  __NO_RETURN         _Noreturn
-#endif
-#ifndef  __STATIC_INLINE
-#define  __STATIC_INLINE      static inline
-#endif
-
-#else
+#if      defined(__CSMC__)
 
 #ifndef  __CONSTRUCTOR
 #define  __CONSTRUCTOR
@@ -111,17 +109,39 @@ extern   stk_t               _stack[];
 #ifndef  __STATIC_INLINE
 #define  __STATIC_INLINE      static inline
 #endif
+#ifndef  __WFI
+#define  __WFI                wfi
+#endif
+
+#elif    defined(__SDCC)
+
+#ifndef  __CONSTRUCTOR
+#define  __CONSTRUCTOR
+#endif
+#ifndef  __NO_RETURN
+#define  __NO_RETURN         _Noreturn
+#endif
+#ifndef  __STATIC_INLINE
+#define  __STATIC_INLINE      static inline
+#endif
+#ifndef  __WFI
+#define  __WFI                wfi
+#endif
 
 #endif
 
 /* -------------------------------------------------------------------------- */
 
 #if      defined(__CSMC__)
+
 #define  port_get_lock()     (char)_asm("push cc""\n""pop a")
 #define  port_put_lock(state)      _asm("push a""\n""pop cc", (char)(state))
-#else
+
+#elif    defined(__SDCC)
+
 char     port_get_lock(void);
 void     port_put_lock(char state);
+
 #endif
 
 #define  port_set_lock()            disableInterrupts()
