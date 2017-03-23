@@ -22,7 +22,7 @@ OS_TSK(mas, master);
 
 void main()
 {
-	LED_Config();
+	LED_Init();
 
 	sys_init();
 	tsk_start(sla);
