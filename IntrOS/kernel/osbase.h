@@ -2,7 +2,7 @@
 
     @file    IntrOS: osbase.h
     @author  Rajmund Szymanski
-    @date    10.03.2017
+    @date    25.03.2017
     @brief   This file contains basic definitions for IntrOS.
 
  ******************************************************************************
@@ -114,43 +114,6 @@ struct __sys
 	volatile
 	unsigned cnt;   // system timer counter
 };
-
-/* -------------------------------------------------------------------------- */
-
-// task context
-
-typedef struct __ctx ctx_t;
-
-#if   defined(__CSMC__)
-
-struct __ctx
-{
-	void   * sp;
-	fun_t  * pc;
-
-};
-
-#elif defined(__SDCC)
-
-struct __ctx
-{
-	fun_t  * pc;
-	void   * sp;
-
-};
-
-#endif
-
-#define _CTX_INIT() { 0, 0 }
-
-/* -------------------------------------------------------------------------- */
-
-__STATIC_INLINE
-void port_ctx_init( ctx_t *ctx, stk_t *sp, fun_t *pc )
-{
-	ctx->sp = sp - 1;
-	ctx->pc = pc;
-}
 
 /* -------------------------------------------------------------------------- */
 
