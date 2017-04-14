@@ -132,29 +132,10 @@ extern   stk_t               _stack[];
 
 /* -------------------------------------------------------------------------- */
 
-#if      defined(__CSMC__)
+typedef  char                 lck_t;
 
-#define  port_get_lock()     (char)_asm("push cc""\n""pop a")
-#define  port_put_lock(state)      _asm("push a""\n""pop cc", (char)(state))
-
-#elif    defined(__SDCC)
-
-char     _get_lock(void);
-void     _put_lock(char state);
-
-#define  port_get_lock()           _get_lock()
-#define  port_put_lock(state)      _put_lock(state)
-
-#endif
-
-#define  port_set_lock()            disableInterrupts()
-#define  port_clr_lock()            enableInterrupts()
-
-#define  port_sys_lock()       do { char __LOCK = port_get_lock(); port_set_lock()
-#define  port_sys_unlock()          port_put_lock(__LOCK); } while(0)
-
-#define  port_isr_lock()       do { port_set_lock()
-#define  port_isr_unlock()          port_clr_lock(); } while(0)
+#define  port_set_lock()      disableInterrupts()
+#define  port_clr_lock()      enableInterrupts()
 
 /* -------------------------------------------------------------------------- */
 
