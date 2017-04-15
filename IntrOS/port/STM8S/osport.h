@@ -2,7 +2,7 @@
 
     @file    IntrOS: osport.h
     @author  Rajmund Szymanski
-    @date    14.04.2017
+    @date    15.04.2017
     @brief   IntrOS port definitions for STM8 uC.
 
  ******************************************************************************
@@ -132,10 +132,18 @@ extern   stk_t               _stack[];
 
 /* -------------------------------------------------------------------------- */
 
-typedef  char                 lck_t;
+#if      defined(__CSMC__)
+
+#define  port_get_lock()     (char)_asm("push cc""\n""pop a")
+#define  port_put_lock(lck)  (void)_asm("push a""\n""pop cc", (char)(lck))
+
+#endif
 
 #define  port_set_lock()      disableInterrupts()
 #define  port_clr_lock()      enableInterrupts()
+
+#define  port_sys_lock()      char __LOCK = port_get_lock(); port_set_lock()
+#define  port_sys_unlock()    port_put_lock(__LOCK)
 
 /* -------------------------------------------------------------------------- */
 
