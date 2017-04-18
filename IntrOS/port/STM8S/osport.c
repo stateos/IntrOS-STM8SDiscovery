@@ -80,3 +80,37 @@ INTERRUPT_HANDLER(TIM3_UPD_OVF_BRK_IRQHandler, 15)
 #endif//OS_TIMER
 
 /* -------------------------------------------------------------------------- */
+
+/******************************************************************************
+ Put here necessary lock / unlock procedures
+*******************************************************************************/
+
+#if defined(__SDCC)
+
+char _get_lock(void) __naked
+{
+	__asm
+
+	push   cc
+	pop    a
+	ret
+
+	__endasm;
+}
+
+void _put_lock(char state) __naked
+{
+	(void) state;
+	
+	__asm
+
+	push   a
+	pop    cc
+	ret
+
+	__endasm;
+}
+
+#endif // __SDCC
+
+/* -------------------------------------------------------------------------- */
