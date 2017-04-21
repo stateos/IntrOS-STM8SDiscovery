@@ -2,7 +2,7 @@
 
     @file    IntrOS: oscore.h
     @author  Rajmund Szymanski
-    @date    26.03.2017
+    @date    21.04.2017
     @brief   IntrOS port file for STM8 uC.
 
  ******************************************************************************
@@ -71,6 +71,37 @@ void port_ctx_init( ctx_t *ctx, stk_t *sp, fun_t *pc )
 	ctx->sp = sp - 1;
 	ctx->pc = pc;
 }
+
+/* -------------------------------------------------------------------------- */
+
+#if   defined(__CSMC__)
+
+#define _get_SP()    (void *)_asm("ldw x, sp")
+#define _set_SP(sp)  (void)  _asm("ldw sp, x", (void *)(sp))
+
+#define _get_CC()    (char)  _asm("push cc""\n""pop a")
+#define _set_CC(cc)  (void)  _asm("push a""\n""pop cc", (char)(cc))
+
+#elif defined(__SDCC)
+
+char _get_CC( void );
+void _set_CC( char cc);
+
+#endif
+
+/* -------------------------------------------------------------------------- */
+
+#define  port_get_lock()     _get_CC()
+#define  port_put_lock(lck)  _set_CC(lck)
+
+#define  port_set_lock()      disableInterrupts()
+#define  port_clr_lock()      enableInterrupts()
+
+#define  port_sys_lock()      do { char __LOCK = port_get_lock(); port_set_lock()
+#define  port_sys_unlock()         port_put_lock(__LOCK); } while(0)
+
+#define  port_isr_lock()      do { port_set_lock()
+#define  port_isr_unlock()         port_clr_lock(); } while(0)
 
 /* -------------------------------------------------------------------------- */
 
