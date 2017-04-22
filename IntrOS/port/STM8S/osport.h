@@ -2,7 +2,7 @@
 
     @file    IntrOS: osport.h
     @author  Rajmund Szymanski
-    @date    21.04.2017
+    @date    22.04.2017
     @brief   IntrOS port definitions for STM8 uC.
 
  ******************************************************************************
@@ -29,6 +29,7 @@
 #ifndef __INTROSPORT_H
 #define __INTROSPORT_H
 
+#include <stm8s.h>
 #include <osconfig.h>
 
 #ifdef __cplusplus
