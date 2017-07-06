@@ -1,22 +1,22 @@
 /******************************************************************************
 
-    @file    StateOS: oscore.c
+    @file    IntrOS: os.c
     @author  Rajmund Szymanski
     @date    06.07.2017
-    @brief   StateOS port file for STM8 uC.
+    @brief   This file provides set of functions for IntrOS.
 
  ******************************************************************************
 
-    StateOS - Copyright (C) 2013 Rajmund Szymanski.
+    IntrOS - Copyright (C) 2013 Rajmund Szymanski.
 
-    This file is part of StateOS distribution.
+    This file is part of IntrOS distribution.
 
-    StateOS is free software; you can redistribute it and/or modify
+    IntrOS is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published
     by the Free Software Foundation; either version 3 of the License,
     or (at your option) any later version.
 
-    StateOS is distributed in the hope that it will be useful,
+    IntrOS is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
@@ -26,36 +26,21 @@
 
  ******************************************************************************/
 
-#include <oskernel.h>
-
-#if defined(__SDCC)
+#include <os.h>
 
 /* -------------------------------------------------------------------------- */
-
-char _get_CC(void) __naked
+uint32_t sys_time( void )
+/* -------------------------------------------------------------------------- */
 {
-	__asm
+	uint32_t cnt;
 
-	push   cc
-	pop    a
-	ret
+	port_cnt_lock();
 
-	__endasm;
-}
+	cnt = Counter;
 
-void _set_CC(char cc) __naked
-{
-	(void) cc;
-	
-	__asm
+	port_cnt_unlock();
 
-	push   a
-	pop    cc
-	ret
-
-	__endasm;
+	return cnt;
 }
 
 /* -------------------------------------------------------------------------- */
-
-#endif // __SDCC
