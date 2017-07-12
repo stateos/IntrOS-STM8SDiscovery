@@ -2,7 +2,7 @@
 
     @file    IntrOS: osport.h
     @author  Rajmund Szymanski
-    @date    24.04.2017
+    @date    12.07.2017
     @brief   IntrOS port definitions for STM8 uC.
 
  ******************************************************************************
@@ -83,6 +83,16 @@ INTERRUPT_HANDLER(TIM3_UPD_OVF_BRK_IRQHandler, 15);
 #endif
 
 #include <assert.h>
+
+/* -------------------------------------------------------------------------- */
+
+#ifndef  OS_FUNCTIONAL
+#define  OS_FUNCTIONAL        0 /* c++ functional library header not included */
+#endif
+
+#if      OS_FUNCTIONAL && defined(__cplusplus)
+#error   c++ functional library not allowed for this compiler.
+#endif
 
 /* -------------------------------------------------------------------------- */
 
