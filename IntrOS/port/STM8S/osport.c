@@ -2,7 +2,7 @@
 
     @file    IntrOS: osport.c
     @author  Rajmund Szymanski
-    @date    21.04.2017
+    @date    14.07.2017
     @brief   IntrOS port file for STM8 uC.
 
  ******************************************************************************
@@ -51,11 +51,11 @@ void port_sys_init( void )
 	TIM3->IER  |= TIM3_IER_UIE;
 	TIM3->CR1  |= TIM3_CR1_CEN;
 
-	enableInterrupts();
-
 /******************************************************************************
  End of configuration
 *******************************************************************************/
+
+	enableInterrupts();
 }
 
 /* -------------------------------------------------------------------------- */
@@ -69,7 +69,6 @@ void port_sys_init( void )
 INTERRUPT_HANDLER(TIM3_UPD_OVF_BRK_IRQHandler, 15)
 {
 	TIM3->SR1= (uint8_t) ~TIM3_SR1_UIF;
-
 	System.cnt++;
 }
 
