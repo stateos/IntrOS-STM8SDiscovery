@@ -3,22 +3,17 @@
 
 OS_SEM(sem, 0);
 
-void slave()
+OS_TSK_DEF(sla)
 {
 	sem_wait(sem);
-
 	LED_Tick();
 }
 
-void master()
+OS_TSK_DEF(mas)
 {
 	tsk_delay(SEC);
-
 	sem_give(sem);
 }
-
-OS_TSK(sla, slave);
-OS_TSK(mas, master);
 
 void main()
 {
