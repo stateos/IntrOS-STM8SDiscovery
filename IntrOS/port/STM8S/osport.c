@@ -2,7 +2,7 @@
 
     @file    IntrOS: osport.c
     @author  Rajmund Szymanski
-    @date    01.08.2017
+    @date    08.08.2017
     @brief   IntrOS port file for STM8 uC.
 
  ******************************************************************************
@@ -35,7 +35,7 @@ void port_sys_init( void )
 #if OS_TICKLESS == 0
 
 /******************************************************************************
- Put here configuration of system timer for non-tick-less mode
+ Non-tick-less mode: configuration of system timer
 *******************************************************************************/
 
 	CLK->CKDIVR = 0;
@@ -67,7 +67,7 @@ void port_sys_init( void )
 #if OS_TICKLESS == 0
 
 /******************************************************************************
- Put here the procedure of interrupt handler of system timer for non-tick-less mode
+ Non-tick-less mode: interrupt handler of system timer
 *******************************************************************************/
 
 INTERRUPT_HANDLER(TIM3_UPD_OVF_BRK_IRQHandler, 15)
@@ -77,7 +77,7 @@ INTERRUPT_HANDLER(TIM3_UPD_OVF_BRK_IRQHandler, 15)
 }
 
 /******************************************************************************
- End of the procedure of interrupt handler
+ End of the handler
 *******************************************************************************/
 
 #endif//OS_TICKLESS
