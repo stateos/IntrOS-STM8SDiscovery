@@ -1,22 +1,22 @@
 /******************************************************************************
 
-    @file    StateOS: oscore.c
+    @file    IntrOS: oscore.c
     @author  Rajmund Szymanski
-    @date    13.07.2017
-    @brief   StateOS port file for STM8 uC.
+    @date    11.08.2017
+    @brief   IntrOS port file for STM8 uC.
 
  ******************************************************************************
 
-    StateOS - Copyright (C) 2013 Rajmund Szymanski.
+    IntrOS - Copyright (C) 2013 Rajmund Szymanski.
 
-    This file is part of StateOS distribution.
+    This file is part of IntrOS distribution.
 
-    StateOS is free software; you can redistribute it and/or modify
+    IntrOS is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published
     by the Free Software Foundation; either version 3 of the License,
     or (at your option) any later version.
 
-    StateOS is distributed in the hope that it will be useful,
+    IntrOS is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
