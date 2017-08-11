@@ -49,6 +49,7 @@ void _set_CC(char cc) __naked
 	
 	__asm
 
+	ld     a, (3, sp)
 	push   a
 	pop    cc
 	ret
