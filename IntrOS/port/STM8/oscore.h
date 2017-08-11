@@ -2,7 +2,7 @@
 
     @file    IntrOS: oscore.h
     @author  Rajmund Szymanski
-    @date    24.07.2017
+    @date    11.08.2017
     @brief   IntrOS port file for STM8 uC.
 
  ******************************************************************************
@@ -117,8 +117,8 @@ void port_ctx_init( ctx_t *ctx, stk_t *sp, fun_t *pc )
 
 #elif defined(__SDCC)
 
-char _get_CC( void );
-void _set_CC( lck_t cc);
+lck_t   _get_CC( void );
+void    _set_CC( lck_t cc);
 
 #endif
 
