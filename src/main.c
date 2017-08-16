@@ -15,7 +15,7 @@ OS_TSK_DEF(mas)
 	sem_give(sem);
 }
 
-void main()
+void main(void)
 {
 	LED_Init();
 
