@@ -32,7 +32,7 @@
 
 /* -------------------------------------------------------------------------- */
 
-lck_t _get_CC(void) __naked
+lck_t _get_CC( void ) __naked
 {
 	__asm
 
@@ -43,7 +43,7 @@ lck_t _get_CC(void) __naked
 	__endasm;
 }
 
-void _set_CC(lck_t cc) __naked
+void _set_CC( lck_t cc ) __naked
 {
 	(void) cc;
 	

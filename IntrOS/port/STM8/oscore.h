@@ -118,7 +118,7 @@ void port_ctx_init( ctx_t *ctx, stk_t *sp, fun_t *pc )
 #elif defined(__SDCC)
 
 lck_t   _get_CC( void );
-void    _set_CC( lck_t cc);
+void    _set_CC( lck_t cc );
 
 #endif
 
