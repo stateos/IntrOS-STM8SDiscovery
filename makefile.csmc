@@ -1,7 +1,7 @@
 #**********************************************************#
 #file     makefile
 #author   Rajmund Szymanski
-#date     06.05.2017
+#date     24.08.2017
 #brief    STM8 makefile.
 #**********************************************************#
 
@@ -78,8 +78,8 @@ TXTS       := $(OBJS:.o=.la)
 AS_FLAGS   := #-ax
 AS_FLAGS   += -ep -l
 CC_FLAGS   := #+debug
-CC_FLAGS   += #+strict +warn
-CC_FLAGS   += +$(MODEL) -pc99 +compact -l
+CC_FLAGS   += #+warn #+strict
+CC_FLAGS   += +$(MODEL) -pc99 -l #+compact
 LD_FLAGS   := -m $(MAP)
 
 #----------------------------------------------------------#

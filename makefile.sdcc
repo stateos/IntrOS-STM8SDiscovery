@@ -31,6 +31,7 @@ CC         := $(SDCC)sdcc
 LD         := $(SDCC)sdld
 AR         := $(SDCC)sdar
 COPY       := $(SDCC)sdobjcopy
+DBG        := $(SDCC)sdcdb
 SIM        := $(SDCC)sstm8
 
 SIZE       := size
@@ -70,11 +71,12 @@ ASMS       := $(OBJS:.rel=.asm)
 LSTS       := $(OBJS:.rel=.lst)
 RSTS       := $(OBJS:.rel=.rst)
 SYMS       := $(OBJS:.rel=.sym)
+ADBS       := $(OBJS:.rel=.adb)
 
 #----------------------------------------------------------#
 
 CORE_F      = -mstm8
-COMMON_F    =
+COMMON_F    = #--debug
 AS_FLAGS    = -l -o -s
 CC_FLAGS    = --std-sdcc11
 LD_FLAGS    =
@@ -85,6 +87,9 @@ DEFS_F     := $(DEFS:%=-D%)
 
 INC_DIRS   += $(INCS:%=%/)
 INC_DIRS_F := $(INC_DIRS:%/=-I%)
+
+SRC_DIRS   := $(sort $(dir $(AS_SRCS) $(CC_SRCS)))
+SRC_DIRS_F := $(SRC_DIRS:%/=--directory=%)
 
 LIB_DIRS_F := $(LIB_DIRS:%/=-L%)
 LIBS_F     := $(LIBS:%=-l%)
@@ -126,7 +131,7 @@ print_elf_size : $(ELF)
 	$(info Size of target file:)
 	$(SIZE) -B $(ELF)
 
-GENERATED = $(BIN) $(ELF) $(HEX) $(LIB) $(LSS) $(MAP) $(CDB) $(LKF) $(LSTS) $(OBJS) $(ASMS) $(LSTS) $(RSTS) $(SYMS)
+GENERATED = $(BIN) $(ELF) $(HEX) $(LIB) $(LSS) $(MAP) $(CDB) $(LKF) $(LSTS) $(OBJS) $(ASMS) $(LSTS) $(RSTS) $(SYMS) $(ADBS)
 
 clean :
 	$(info Removing all generated output files)
@@ -138,6 +143,7 @@ flash : all $(HEX)
 
 debug : all $(HEX)
 	$(info Debugging device...)
-	$(SIM) $(HEX)
+	$(DBG) $(PROJECT) $(SRC_DIRS_F)
+#	$(SIM) $(HEX)
 
 .PHONY : all lib clean flash debug
