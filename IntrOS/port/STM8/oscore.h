@@ -2,7 +2,7 @@
 
     @file    IntrOS: oscore.h
     @author  Rajmund Szymanski
-    @date    26.08.2017
+    @date    11.08.2017
     @brief   IntrOS port file for STM8 uC.
 
  ******************************************************************************
@@ -39,10 +39,6 @@ extern "C" {
 
 #ifndef  OS_STACK_SIZE
 #define  OS_STACK_SIZE      128 /* default task stack size in bytes           */
-#endif
-
-#ifndef  OS_CHECK_SIZE
-#define  OS_CHECK_SIZE       16 /* minimum assertion stack size in bytes      */
 #endif
 
 /* -------------------------------------------------------------------------- */
@@ -121,22 +117,10 @@ void port_ctx_init( ctx_t *ctx, stk_t *sp, fun_t *pc )
 
 #elif defined(__SDCC)
 
-void  * _get_SP( void );
-void    _set_SP( void *sp );
-
 lck_t   _get_CC( void );
 void    _set_CC( lck_t cc );
 
 #endif
-
-/* -------------------------------------------------------------------------- */
-
-// get current stack pointer
-__STATIC_INLINE
-void * port_get_sp( void )
-{
-	return _get_SP();
-}
 
 /* -------------------------------------------------------------------------- */
 
