@@ -32,6 +32,36 @@
 
 /* -------------------------------------------------------------------------- */
 
+void *_get_SP( void ) __naked
+{
+	__asm
+
+	popw   y
+	ldw    x, sp
+	pushw  y
+	ret
+
+	__endasm;
+}
+
+void _set_SP( void *sp ) __naked
+{
+	(void) sp;
+
+	__asm
+
+	popw   y
+	popw   x
+	ldw    sp, x
+	pushw  x
+	pushw  y
+	ret
+
+	__endasm;
+}
+
+/* -------------------------------------------------------------------------- */
+
 lck_t _get_CC( void ) __naked
 {
 	__asm
