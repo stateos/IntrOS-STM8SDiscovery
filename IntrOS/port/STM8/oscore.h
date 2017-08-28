@@ -2,7 +2,7 @@
 
     @file    IntrOS: oscore.h
     @author  Rajmund Szymanski
-    @date    24.08.2017
+    @date    28.08.2017
     @brief   IntrOS port file for STM8 uC.
 
  ******************************************************************************
@@ -124,6 +124,15 @@ lck_t   _get_CC( void );
 void    _set_CC( lck_t cc );
 
 #endif
+
+/* -------------------------------------------------------------------------- */
+
+// get current stack pointer
+__STATIC_INLINE
+void * port_get_sp( void )
+{
+	return _get_SP();
+}
 
 /* -------------------------------------------------------------------------- */
 
