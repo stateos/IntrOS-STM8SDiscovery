@@ -1,4 +1,4 @@
-IntrOS
+IntrOS [![Build Status](https://travis-ci.org/stateos/IntrOS-STM8SDiscovery.svg)](https://travis-ci.org/stateos/IntrOS-STM8SDiscovery)
 =======
 
 Free, simple and tiny cooperative operating system (OS) designed for deeply embedded applications.
