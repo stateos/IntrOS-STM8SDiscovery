@@ -17,7 +17,7 @@ before_install:
 # - rm -r sdcc-3.6.0
   - wget https://netcologne.dl.sourceforge.net/project/sdcc/snapshot_builds/amd64-unknown-linux2.5/sdcc-snapshot-amd64-unknown-linux2.5-20171007-10034.tar.bz2
   - tar xjf sdcc-snapshot-amd64-unknown-linux2.5-20171007-10034.tar.bz2
-  - cp -r sdcc/* /usr/local
+  - sudo cp -r sdcc/* /usr/local
   - rm -r sdcc
 
 install:
