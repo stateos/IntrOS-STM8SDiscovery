@@ -21,6 +21,7 @@ install:
   - unzip -q -d . IntrOS-master.zip IntrOS-master/IntrOS/kernel/*
   - mv -T IntrOS-master/IntrOS/kernel/ IntrOS/kernel/
 
+before_script: /usr/local/bin/sdcc --version
 
 script: make all SDCC=/usr/local/bin/ -f makefile.sdcc
 
