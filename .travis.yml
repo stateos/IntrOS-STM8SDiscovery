@@ -19,6 +19,8 @@ before_install:
   - tar xjf sdcc-snapshot-amd64-unknown-linux2.5-20171007-10034.tar.bz2
   - sudo cp -r sdcc/* /usr/local
   - rm -r sdcc
+  - sudo apt-get update -qq
+  - /usr/local/bin/sdcc --version
 
 install:
   - wget https://github.com/stateos/IntrOS/archive/master.zip -O IntrOS-master.zip
@@ -26,8 +28,7 @@ install:
   - mv -T IntrOS-master/IntrOS/kernel/ IntrOS/kernel/
   - rm -r IntrOS-master
 
-before_script: /usr/local/bin/sdcc --version
-
 script: make all SDCC=/usr/local/bin/ -f makefile.sdcc
 
 group: stable
+	
