@@ -6,7 +6,7 @@ os: linux
 
 dist: trusty
 
-compiler: sdcc
+# compiler: sdcc
 
 before_install:
   - sudo apt-get update -qq
