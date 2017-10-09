@@ -45,6 +45,6 @@ install:
 
 before_script: sdcc --version
 
-script: make all SDCC= -s -f makefile.sdcc
+script: make all SDCC= -f makefile.sdcc
 
 group: stable
