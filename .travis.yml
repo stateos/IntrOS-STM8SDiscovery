@@ -31,8 +31,8 @@ before_install:
                 --disable-s08-port
                 --disable-ucsim
                 --disable-non-free
-  - make
-  - sudo make install
+  - make -s
+  - sudo make -s install
   - cd ..
   - cd ..
   - rm -Rf sdcc-code
@@ -45,6 +45,6 @@ install:
 
 before_script: sdcc --version
 
-script: make all SDCC= -f makefile.sdcc
+script: make all SDCC= -s -f makefile.sdcc
 
 group: stable
