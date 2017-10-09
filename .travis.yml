@@ -14,7 +14,7 @@ before_install:
   - sudo apt-get install -y curl subversion build-essential flex bison libboost-dev texinfo stx-btree-dev zip netcat gawk python2.7
   - mkdir sdcc-code -p
   - cd sdcc-code
-  - svn checkout svn://svn.code.sf.net/p/sdcc/code/trunk/
+  - svn checkout svn://svn.code.sf.net/p/sdcc/code/trunk/sdcc@10039
   - cd sdcc
   - ./configure --disable-pic14-port --disable-pic16-port
   - make && make install
