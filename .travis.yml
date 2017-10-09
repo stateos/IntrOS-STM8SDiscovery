@@ -32,7 +32,7 @@ before_install:
                 --disable-ucsim
                 --disable-non-free
   - make -s
-  - sudo make -s install
+  - sudo make install -s
   - cd ..
   - cd ..
   - rm -Rf sdcc-code
