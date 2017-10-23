@@ -42,7 +42,7 @@ INTERRUPT_HANDLER(TIM3_UPD_OVF_BRK_IRQHandler, 15);
 /* -------------------------------------------------------------------------- */
 
 #ifndef  OS_TICKLESS
-#define  OS_TICKLESS          0 /* os not works in tick-less mode             */
+#define  OS_TICKLESS          0 /* os does not work in tick-less mode         */
 #endif
 
 #if      OS_TICKLESS
