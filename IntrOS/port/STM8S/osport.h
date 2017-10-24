@@ -2,8 +2,8 @@
 
     @file    IntrOS: osport.h
     @author  Rajmund Szymanski
-    @date    01.08.2017
-    @brief   IntrOS port definitions for STM8 uC.
+    @date    24.10.2017
+    @brief   IntrOS port definitions for STM8S uC.
 
  ******************************************************************************
 
@@ -41,28 +41,28 @@ INTERRUPT_HANDLER(TIM3_UPD_OVF_BRK_IRQHandler, 15);
 
 /* -------------------------------------------------------------------------- */
 
-#ifndef  OS_TICKLESS
-#define  OS_TICKLESS          0 /* os does not work in tick-less mode         */
+#ifndef OS_TICKLESS
+#define OS_TICKLESS           0 /* os does not work in tick-less mode         */
 #endif
 
-#if      OS_TICKLESS
-#error   osconfig.h: Incorrect OS_TICKLESS value! This port does not support tick-less mode.
+#if     OS_TICKLESS
+#error  osconfig.h: Incorrect OS_TICKLESS value! This port does not support tick-less mode.
 #endif
 
 /* -------------------------------------------------------------------------- */
 
 #ifndef CPU_FREQUENCY
-#error   osconfig.h: Undefined CPU_FREQUENCY value!
+#error  osconfig.h: Undefined CPU_FREQUENCY value!
 #endif
 
 /* -------------------------------------------------------------------------- */
 
-#ifndef  OS_FREQUENCY
-#define  OS_FREQUENCY      1000 /* Hz */
+#ifndef OS_FREQUENCY
+#define OS_FREQUENCY       1000 /* Hz */
 #endif
 
-#if     (OS_FREQUENCY > 1000)
-#error   osconfig.h: Incorrect OS_FREQUENCY value!
+#if     OS_FREQUENCY > 1000
+#error  osconfig.h: Incorrect OS_FREQUENCY value!
 #endif
 
 /* -------------------------------------------------------------------------- */
