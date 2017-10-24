@@ -60,7 +60,7 @@ void port_sys_init( void )
 
 #endif//OS_TICKLESS
 
-	enableInterrupts();
+	port_clr_lock();
 }
 
 /* -------------------------------------------------------------------------- */
