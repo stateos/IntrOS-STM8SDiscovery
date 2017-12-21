@@ -2,7 +2,7 @@
 
     @file    IntrOS: osport.c
     @author  Rajmund Szymanski
-    @date    20.12.2017
+    @date    21.12.2017
     @brief   IntrOS port file for STM8S uC.
 
  ******************************************************************************
@@ -48,11 +48,11 @@ void port_sys_init( void )
 	#define  PSC_ CNT_ (((CPU_FREQUENCY)/(OS_FREQUENCY)-1)>>16)
 	#define  ARR_     ((((CPU_FREQUENCY)/(OS_FREQUENCY))>>PSC_)-1)
 
-	TIM3->PSCR  = PSC_;
-	TIM3->ARRH  = (uint8_t)(ARR_ >> 8);
-	TIM3->ARRL  = (uint8_t)(ARR_);
-	TIM3->IER  |= TIM3_IER_UIE;
-	TIM3->CR1  |= TIM3_CR1_CEN;
+	TIM3->PSCR = PSC_;
+	TIM3->ARRH = (uint8_t)(ARR_ >> 8);
+	TIM3->ARRL = (uint8_t)(ARR_);
+	TIM3->IER |= TIM3_IER_UIE;
+	TIM3->CR1 |= TIM3_CR1_CEN;
 
 /******************************************************************************
  End of configuration
@@ -72,9 +72,9 @@ void port_sys_init( void )
 	#error Incorrect OS_FREQUENCY frequency!
 	#endif
 
-	TIM3->PSCR  = PSC_;
-	TIM3->IER  |= TIM3_IER_UIE;
-	TIM3->CR1  |= TIM3_CR1_CEN;
+	TIM3->PSCR = PSC_;
+	TIM3->IER |= TIM3_IER_UIE;
+	TIM3->CR1 |= TIM3_CR1_CEN;
 
 /******************************************************************************
  End of configuration
@@ -131,7 +131,7 @@ uint32_t port_sys_time( void )
 	cnt = System.cnt;
 	tck = ((uint16_t)TIM3->CNTRH << 8) | TIM3->CNTRL;
 
-	if (TIM3->SR1)
+	if (TIM3->SR1 & TIM3_SR1_UIF)
 	{
 		cnt += 1UL << 16; // TIM3->CNTR is 16-bit
 		tck = ((uint16_t)TIM3->CNTRH << 8) | TIM3->CNTRL;
