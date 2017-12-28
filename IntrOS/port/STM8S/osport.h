@@ -2,7 +2,7 @@
 
     @file    IntrOS: osport.h
     @author  Rajmund Szymanski
-    @date    20.12.2017
+    @date    28.12.2017
     @brief   IntrOS port definitions for STM8S uC.
 
  ******************************************************************************
@@ -30,7 +30,9 @@
 #define __INTROSPORT_H
 
 #include <stm8s.h>
+#ifndef   NOCONFIG
 #include <osconfig.h>
+#endif
 #include <osdefs.h>
 
 #ifdef __cplusplus
@@ -41,30 +43,24 @@ INTERRUPT_HANDLER(TIM3_UPD_OVF_BRK_IRQHandler, 15);
 
 /* -------------------------------------------------------------------------- */
 
-#ifndef OS_TICKLESS
-#define OS_TICKLESS           0 /* os does not work in tick-less mode         */
-#endif
-
-/* -------------------------------------------------------------------------- */
-
 #ifndef CPU_FREQUENCY
-#error  osconfig.h: Undefined CPU_FREQUENCY value!
+#define CPU_FREQUENCY  16000000 /* Hz */
 #endif
 
 /* -------------------------------------------------------------------------- */
 
 #ifndef OS_FREQUENCY
-
-#if     OS_TICKLESS
-#define OS_FREQUENCY    1000000 /* Hz */
-#else
 #define OS_FREQUENCY       1000 /* Hz */
 #endif
 
-#endif//OS_FREQUENCY
+/* -------------------------------------------------------------------------- */
 
-#if    (OS_TICKLESS == 0) && (OS_FREQUENCY > 1000)
-#error  osconfig.h: Incorrect OS_FREQUENCY value!
+#ifdef  HW_TIMER_SIZE
+#error  HW_TIMER_SIZE is an internal definition!
+#elif   OS_FREQUENCY > 1000 
+#define HW_TIMER_SIZE        16
+#else
+#define HW_TIMER_SIZE         0
 #endif
 
 /* -------------------------------------------------------------------------- */
