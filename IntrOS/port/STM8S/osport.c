@@ -2,7 +2,7 @@
 
     @file    IntrOS: osport.c
     @author  Rajmund Szymanski
-    @date    28.12.2017
+    @date    01.01.2018
     @brief   IntrOS port file for STM8S uC.
 
  ******************************************************************************
@@ -69,7 +69,9 @@ void port_sys_init( void )
 *******************************************************************************/
 
 	TIM3->PSCR = PSC_;
+	#if HW_TIMER_SIZE < OS_TIMER_SIZE
 	TIM3->IER  = TIM3_IER_UIE;
+	#endif
 	TIM3->CR1  = TIM3_CR1_CEN;
 
 /******************************************************************************
@@ -108,6 +110,8 @@ INTERRUPT_HANDLER(TIM3_UPD_OVF_BRK_IRQHandler, 15)
  Tick-less mode: interrupt handler of system timer
 *******************************************************************************/
 
+#if HW_TIMER_SIZE < OS_TIMER_SIZE
+
 INTERRUPT_HANDLER(TIM3_UPD_OVF_BRK_IRQHandler, 15)
 {
 //	if (TIM3->SR1 & TIM3_SR1_UIF)
@@ -117,6 +121,8 @@ INTERRUPT_HANDLER(TIM3_UPD_OVF_BRK_IRQHandler, 15)
 	}
 }
 
+#endif
+
 /******************************************************************************
  End of the handler
 *******************************************************************************/
@@ -125,9 +131,11 @@ INTERRUPT_HANDLER(TIM3_UPD_OVF_BRK_IRQHandler, 15)
  Tick-less mode: return current system time
 *******************************************************************************/
 
-uint32_t port_sys_time( void )
+#if HW_TIMER_SIZE < OS_TIMER_SIZE
+
+cnt_t port_sys_time( void )
 {
-	uint32_t cnt;
+	cnt_t    cnt;
 	uint16_t tck;
 
 	cnt = System.cnt;
@@ -136,11 +144,13 @@ uint32_t port_sys_time( void )
 	if (TIM3->SR1 & TIM3_SR1_UIF)
 	{
 		tck = ((uint16_t)TIM3->CNTRH << 8) | TIM3->CNTRL;
-		cnt += 1UL << (HW_TIMER_SIZE);
+		cnt += (cnt_t)(1) << (HW_TIMER_SIZE);
 	}
 
 	return cnt + tck;
 }
+
+#endif
 
 /******************************************************************************
  End of the function
