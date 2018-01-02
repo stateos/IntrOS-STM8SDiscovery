@@ -2,7 +2,7 @@
 
     @file    IntrOS: osport.h
     @author  Rajmund Szymanski
-    @date    01.01.2018
+    @date    02.01.2018
     @brief   IntrOS port definitions for STM8S uC.
 
  ******************************************************************************
@@ -38,8 +38,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-INTERRUPT_HANDLER(TIM3_UPD_OVF_BRK_IRQHandler, 15);
 
 /* -------------------------------------------------------------------------- */
 
@@ -80,6 +78,12 @@ uint16_t port_sys_time( void )
 	return ((uint16_t)TIM3->CNTRH << 8) | TIM3->CNTRL;
 }
 
+#endif
+
+/* -------------------------------------------------------------------------- */
+
+#if HW_TIMER_SIZE < OS_TIMER_SIZE
+INTERRUPT_HANDLER(TIM3_UPD_OVF_BRK_IRQHandler, 15);
 #endif
 
 /* -------------------------------------------------------------------------- */
