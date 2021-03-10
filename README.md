@@ -6,7 +6,6 @@ TEMPLATE.
 
 ### Target
 
-
 STM8S-Discovery board.
 
 ### License
