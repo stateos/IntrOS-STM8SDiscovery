@@ -1,5 +1,5 @@
 PROJECT := test
-SDCC    :=
+IARC    :=
 DEFS    :=
 INCS    := include
 SRCS    := src/main.c
@@ -8,7 +8,7 @@ SCRIPT  :=
 COMMON  := common
 
 #----------------------------------------------------------#
-include $(COMMON)/intros/make/stm8sdiscovery/makefile.sdcc
+include $(COMMON)/intros/make/stm8sdiscovery/makefile.iarc
 #----------------------------------------------------------#
 
 include $(COMMON)/startup/makefile
