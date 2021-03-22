@@ -10,12 +10,9 @@ COMMON  := common
 #----------------------------------------------------------#
 include $(COMMON)/intros/make/stm8sdiscovery/makefile.iarc
 #----------------------------------------------------------#
-
-include $(COMMON)/startup/makefile
 include $(COMMON)/api/makefile
 include $(COMMON)/device/makefile
-include $(COMMON)/intros/makefile
-
+include $(COMMON)/startup/makefile
 #----------------------------------------------------------#
 include $(COMMON)/make/makefile
 #----------------------------------------------------------#
